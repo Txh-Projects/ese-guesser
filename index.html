@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guess the Order</title>
+  <title>Every Story Guesser</title>
   <style>
     body { font-family: Arial, sans-serif; }
     .entry { cursor: pointer; margin: 20px; padding: 10px; border: 1px solid #000; display: inline-block; }
     #score { font-size: 20px; margin: 20px; }
 	#streak { font-size: 20px; margin: 20px; }
+	#beststreak { font-size: 20px; margin: 20px; }
 	#disclaimer { font-size: 10px; margin: 20px; }
   </style>
 </head>
@@ -23,6 +24,7 @@
   <div id="feedback">Take your first guess!</div>
   <div id="score">Score: 0</div>
   <div id="streak">Streak: 0</div>
+  <div id="beststreak">Best Streak: 0</div>
   <div id="disclaimer">This is a fan project, just for fun. I do not own any aspect of the ESE list.</div> 
 
   <script>
@@ -77,6 +79,9 @@
 	    document.getElementById('feedback').textContent = `You got it! ${entries[entry1Index]} is rank ${entry1Index}, and ${entries[entry2Index]} is rank ${entry2Index}!`;
         score++;
 		streak++;
+		if (streak > beststreak) {
+		  beststreak = streak
+		}
       } else {
         document.getElementById('feedback').textContent = `Not quite! ${entries[entry1Index]} is rank ${entry1Index}, and ${entries[entry2Index]} is rank ${entry2Index}!`;
 		score--;
@@ -85,6 +90,7 @@
       }
       document.getElementById('score').textContent = `Score: ${score}`;
 	  document.getElementById('streak').textContent = `Streak: ${streak}`;
+	  document.getElementById('beststreak').textContent = `Best Streak: ${beststreak}`;
       loadNewEntries();
     }
   </script>

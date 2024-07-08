@@ -22,6 +22,7 @@
     let score = 0;
     let entries = [];
 
+	
     document.addEventListener('DOMContentLoaded', () => {
       fetch('eselist.txt')
 	    .then(response => response.text())
@@ -37,12 +38,15 @@
     function loadNewEntries() {
       if (entries.length < 2) return;
 
-      const entry1Index = Math.floor(Math.random() * entries.length);
-      let entry2Index = Math.floor(Math.random() * entries.length);
+      const entry1Index = getRandom(entries.length);
+      let entry2Index = getRandom(entries.length);
 
       while (entry1Index === entry2Index) {
-        entry2Index = Math.floor(Math.random() * entries.length);
+        entry2Index = getRandom(entries.length);
       }
+
+	  console.log(entry1Index);
+	  console.log(entry2Index);
 
       document.getElementById('entry1').textContent = entries[entry1Index];
       document.getElementById('entry2').textContent = entries[entry2Index];
@@ -50,6 +54,10 @@
       document.getElementById('entry1').dataset.index = entry1Index;
       document.getElementById('entry2').dataset.index = entry2Index;
     }
+	
+	function getRandom(limit) {
+		return Math.floor(Math.random() * limit + 1);
+	}
 
     function handleGuess(guessIndex) {
       const entry1Index = parseInt(document.getElementById('entry1').dataset.index);

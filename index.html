@@ -11,11 +11,14 @@
   </style>
 </head>
 <body>
-  <h1>Which one ranks higher?</h1>
+  <h1>Every Story Ever guessing game</h1>
+  <p>The hosts of <a href="https://zencastr.com/War-Rocket-Ajax">War Rocket Ajax</a> have, since 2014, been building a list of every comic story ever, ranked from best to worst. 
+  <h2>Which one ranks higher?</h2>
   <div id="entries">
     <div id="entry1" class="entry"></div>
     <div id="entry2" class="entry"></div>
   </div>
+  <div id="feedback">Take your first guess!</div>
   <div id="score">Score: 0</div>
 
   <script>
@@ -36,23 +39,6 @@
       document.getElementById('entry2').addEventListener('click', () => handleGuess(2));
     });
 	
-	/*
-	document.addEventListener('DOMContentLoaded', () => {
-	entries = [
-      "Entry1",
-      "Entry2",
-      "Entry3",
-      "Entry4",
-      "Entry5",
-      "Entry6"
-    ];
-	
-	loadNewEntries();
-	console.log("Setting up handlers...")
-      document.getElementById('entry1').addEventListener('click', () => handleGuess(1));
-      document.getElementById('entry2').addEventListener('click', () => handleGuess(2));
-	});
-	*/
     function loadNewEntries() {
       if (entries.length < 2) return;
 
@@ -81,11 +67,13 @@
       console.log("Handling guess...");
 	  const entry1Index = parseInt(document.getElementById('entry1').dataset.index);
       const entry2Index = parseInt(document.getElementById('entry2').dataset.index);
-
+      
       if ((guessIndex === 1 && entry1Index < entry2Index) || (guessIndex === 2 && entry2Index < entry1Index)) {
+	    document.getElementById('feedback').textContent = `You got it! ${entries[entry1Index]} is rank ${entry1Index}, and ${entries[entry2Index]} is rank ${entry2Index}!`;
         score++;
       } else {
-        score = 0;
+        document.getElementById('feedback').textContent = `Not quite! ${entries[entry1Index]} is rank ${entry1Index}, and ${entries[entry2Index]} is rank ${entry2Index}!`;
+		score = 0;
       }
 
       document.getElementById('score').textContent = `Score: ${score}`;

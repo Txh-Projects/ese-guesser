@@ -8,6 +8,7 @@
     body { font-family: Arial, sans-serif; }
     .entry { cursor: pointer; margin: 20px; padding: 10px; border: 1px solid #000; display: inline-block; }
     #score { font-size: 20px; margin: 20px; }
+	#streak { font-size: 20px; margin: 20px; }
 	#disclaimer { font-size: 10px; margin: 20px; }
   </style>
 </head>
@@ -21,10 +22,12 @@
   </div>
   <div id="feedback">Take your first guess!</div>
   <div id="score">Score: 0</div>
+  <div id="score">Streak: 0</div>
   <div id="disclaimer">This is a fan project, just for fun. I do not own any aspect of the ESE list.</div> 
 
   <script>
     let score = 0;
+	let streak = 0;
     let entries = [];
 
 	
@@ -73,12 +76,16 @@
       if ((guessIndex === 1 && entry1Index < entry2Index) || (guessIndex === 2 && entry2Index < entry1Index)) {
 	    document.getElementById('feedback').textContent = `You got it! ${entries[entry1Index]} is rank ${entry1Index}, and ${entries[entry2Index]} is rank ${entry2Index}!`;
         score++;
+		streak++;
       } else {
         document.getElementById('feedback').textContent = `Not quite! ${entries[entry1Index]} is rank ${entry1Index}, and ${entries[entry2Index]} is rank ${entry2Index}!`;
-		score = 0;
+		score--;
+		streak = 0;
+		
       }
 
       document.getElementById('score').textContent = `Score: ${score}`;
+	  document.getElementById('streak').textContent = `Streak: ${streak}`;
       loadNewEntries();
     }
   </script>

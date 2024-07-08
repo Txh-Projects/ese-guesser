@@ -22,7 +22,7 @@
   </div>
   <div id="feedback">Take your first guess!</div>
   <div id="score">Score: 0</div>
-  <div id="score">Streak: 0</div>
+  <div id="streak">Streak: 0</div>
   <div id="disclaimer">This is a fan project, just for fun. I do not own any aspect of the ESE list.</div> 
 
   <script>
@@ -83,7 +83,6 @@
 		streak = 0;
 		
       }
-
       document.getElementById('score').textContent = `Score: ${score}`;
 	  document.getElementById('streak').textContent = `Streak: ${streak}`;
       loadNewEntries();

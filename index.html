@@ -8,11 +8,12 @@
     body { font-family: Arial, sans-serif; }
     .entry { cursor: pointer; margin: 20px; padding: 10px; border: 1px solid #000; display: inline-block; }
     #score { font-size: 20px; margin: 20px; }
+	#score { font-size: 10px; margin: 20px; }
   </style>
 </head>
 <body>
   <h1>Every Story Ever guessing game</h1>
-  <p>The hosts of <a href="https://zencastr.com/War-Rocket-Ajax">War Rocket Ajax</a> have, since 2014, been building a list of every comic story ever, ranked from best to worst. 
+  <div>The hosts of <a href="https://zencastr.com/War-Rocket-Ajax">War Rocket Ajax</a> have, since 2014, been building a list of every comic story ever, ranked from best to worst.</div> 
   <h2>Which one ranks higher?</h2>
   <div id="entries">
     <div id="entry1" class="entry"></div>
@@ -20,6 +21,7 @@
   </div>
   <div id="feedback">Take your first guess!</div>
   <div id="score">Score: 0</div>
+  <div id="disclaimer">This is a fan project, just for fun. I do not own any aspect of the ESE list.</div> 
 
   <script>
     let score = 0;

@@ -60,7 +60,8 @@
 	}
 
     function handleGuess(guessIndex) {
-      const entry1Index = parseInt(document.getElementById('entry1').dataset.index);
+      console.log("Handling guess...");
+	  const entry1Index = parseInt(document.getElementById('entry1').dataset.index);
       const entry2Index = parseInt(document.getElementById('entry2').dataset.index);
 
       if ((guessIndex === 1 && entry1Index < entry2Index) || (guessIndex === 2 && entry2Index < entry1Index)) {

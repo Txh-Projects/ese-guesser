@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<meta http-equiv='cache-control' content='no-cache'> 
+<meta http-equiv='expires' content='0'> 
+<meta http-equiv='pragma' content='no-cache'>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -15,7 +18,7 @@
 </head>
 <body>
   <h1>Every Story Ever guessing game</h1>
-  <div>The hosts of <a href="https://zencastr.com/War-Rocket-Ajax">War Rocket Ajax</a> have, since 2014, been building a list of every comic story ever, ranked from best to worst.</div> 
+  <div>The hosts of <a href="https://zencastr.com/War-Rocket-Ajax">War Rocket Ajax</a> have, since 2014, been building a list of every comic story ever, ranked from best to worst. They are also responsible for several other lists.</div> 
   <h2>Which one ranks higher?</h2>
   <div id="entries">
     <div id="entry1" class="entry"></div>
@@ -25,7 +28,13 @@
   <div id="score">Score: 0</div>
   <div id="streak">Streak: 0</div>
   <div id="beststreak">Best Streak: 0</div>
-  <div id="disclaimer">This is a fan project, just for fun. I do not own any aspect of the ESE list.</div> 
+  <div id="selectionbox"><label for="comboBox">Choose a list:</label>
+    <select id="comboBox" onchange="changeList(this.value)">
+        <option value="eselist.txt">Every Story Ever</option>
+        <option value="panelpreslist.txt">Panel President</option>
+        <option value="snacklist.txt">Snack Situation</option>
+    </select>
+  <div id="disclaimer">Last updated 8 July 2024. This is a fan project, just for fun. I do not own any aspect of the any of these lists. v1.004.</div> 
 
   <script>
     let score = 0;
@@ -35,20 +44,8 @@
 	let entry1display = 0;
 	let entry2display = 0;
 
-	
-    document.addEventListener('DOMContentLoaded', () => {
-      fetch('eselist.txt')
-	    .then(response => response.text())
-        .then(data => {
-          entries = data.split('\n').filter(entry => entry.trim() !== '');
-          loadNewEntries();
-        });
-
-      console.log("Setting up handlers...")
-      document.getElementById('entry1').addEventListener('click', () => handleGuess(1));
-      document.getElementById('entry2').addEventListener('click', () => handleGuess(2));
-    });
-	
+	setupList('eselist.txt');
+    	
     function loadNewEntries() {
       if (entries.length < 2) return;
 
@@ -72,6 +69,49 @@
 	function getRandom(limit) {
 		return Math.floor(Math.random() * limit);
 	}
+	
+	function setupList(listFile) {
+		console.log("Setting up list.");
+		document.addEventListener('DOMContentLoaded', () => {
+		  fetchFromFile(listFile);
+		  console.log("Setting up handlers...");
+		  document.getElementById('entry1').addEventListener('click', () => handleGuess(1));
+		  document.getElementById('entry2').addEventListener('click', () => handleGuess(2));
+		});
+	}
+	
+	function fetchFromFile(listFile) {
+		console.log("Fetching entries");
+		entries = [];
+		fetch(listFile)
+			.then(response => response.text())
+			.then(data => {
+			  entries = data.split('\n').filter(entry => entry.trim() !== '');
+			  loadNewEntries();
+		});
+	}
+	
+	
+	function resetScores() {
+		score = 0;
+		streak = 0;
+		beststreak = 0;
+		updateScoreDisplay()
+	}
+	
+	function updateScoreDisplay() {
+	  document.getElementById('score').textContent = `Score: ${score}`;
+	  document.getElementById('streak').textContent = `Streak: ${streak}`;
+	  document.getElementById('beststreak').textContent = `Best Streak: ${beststreak}`;	
+	}
+	
+	
+	function changeList(listFile) {
+		console.log("Changing list.");
+		fetchFromFile(listFile);
+		resetScores();
+		loadNewEntries();
+	}
 
     function handleGuess(guessIndex) {
       console.log("Handling guess...");
@@ -91,12 +131,10 @@
       } else {
         document.getElementById('feedback').textContent = `Not quite! ${entries[entry1Index]} is rank ${entry1display}, and ${entries[entry2Index]} is rank ${entry2display}!`;
 		score--;
-		streak = 0;
-		
+		streak = 0;		
       }
-      document.getElementById('score').textContent = `Score: ${score}`;
-	  document.getElementById('streak').textContent = `Streak: ${streak}`;
-	  document.getElementById('beststreak').textContent = `Best Streak: ${beststreak}`;
+	  
+	  updateScoreDisplay();
       loadNewEntries();
     }
   </script>

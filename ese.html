@@ -25,6 +25,12 @@
   <div id="score">Score: 0</div>
   <div id="streak">Streak: 0</div>
   <div id="beststreak">Best Streak: 0</div>
+  <div id="selectionbox"><label for="comboBox">Choose an list:</label>
+    <select id="comboBox" onchange="changeList(this.value)">
+        <option value="eselist.txt">Every Story Ever</option>
+        <option value="panelpreslist.txt">Panel President</option>
+        <option value="snacklist.txt">Snack Situation</option>
+    </select>
   <div id="disclaimer">Last updated 8 July 2024. This is a fan project, just for fun. I do not own any aspect of the ESE list.</div> 
 
   <script>
@@ -81,6 +87,11 @@
 		streak = 0;
 		beststreak = 0;
 	}
+	
+	function changeList(newListFile) {
+		setupList(listFile);
+		resetScores();
+	}
 
     function handleGuess(guessIndex) {
       console.log("Handling guess...");
@@ -100,8 +111,7 @@
       } else {
         document.getElementById('feedback').textContent = `Not quite! ${entries[entry1Index]} is rank ${entry1display}, and ${entries[entry2Index]} is rank ${entry2display}!`;
 		score--;
-		streak = 0;
-		
+		streak = 0;		
       }
       document.getElementById('score').textContent = `Score: ${score}`;
 	  document.getElementById('streak').textContent = `Streak: ${streak}`;

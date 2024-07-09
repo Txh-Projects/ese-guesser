@@ -25,13 +25,13 @@
   <div id="score">Score: 0</div>
   <div id="streak">Streak: 0</div>
   <div id="beststreak">Best Streak: 0</div>
-  <div id="selectionbox"><label for="comboBox">Choose an list:</label>
+  <div id="selectionbox"><label for="comboBox">Choose a list:</label>
     <select id="comboBox" onchange="changeList(this.value)">
         <option value="eselist.txt">Every Story Ever</option>
         <option value="panelpreslist.txt">Panel President</option>
         <option value="snacklist.txt">Snack Situation</option>
     </select>
-  <div id="disclaimer">Last updated 8 July 2024. This is a fan project, just for fun. I do not own any aspect of the ESE list.</div> 
+  <div id="disclaimer">Last updated 8 July 2024. This is a fan project, just for fun. I do not own any aspect of the any of these lists.</div> 
 
   <script>
     let score = 0;
@@ -69,7 +69,7 @@
 	
 	function setupList(listFile) {
 		document.addEventListener('DOMContentLoaded', () => {
-		  fetch('eselist.txt')
+		  fetch(listFile)
 			.then(response => response.text())
 			.then(data => {
 			  entries = data.split('\n').filter(entry => entry.trim() !== '');
@@ -89,6 +89,7 @@
 	}
 	
 	function changeList(newListFile) {
+		console.log("Changing list.")
 		setupList(listFile);
 		resetScores();
 	}

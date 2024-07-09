@@ -32,6 +32,8 @@
 	let streak = 0;
 	let beststreak = 0;
     let entries = [];
+	let entry1display = 0;
+	let entry2display = 0;
 
 	
     document.addEventListener('DOMContentLoaded', () => {
@@ -76,15 +78,18 @@
 	  const entry1Index = parseInt(document.getElementById('entry1').dataset.index);
       const entry2Index = parseInt(document.getElementById('entry2').dataset.index);
       
+	  entry1display = entry1Index + 1;
+	  entry2display = entry2Index + 1;
+	  
       if ((guessIndex === 1 && entry1Index < entry2Index) || (guessIndex === 2 && entry2Index < entry1Index)) {
-	    document.getElementById('feedback').textContent = `You got it! ${entries[entry1Index]} is rank ${entry1Index}, and ${entries[entry2Index]} is rank ${entry2Index}!`;
+	    document.getElementById('feedback').textContent = `You got it! ${entries[entry1Index]} is rank ${entry1display}, and ${entries[entry2Index]} is rank ${entry2display}!`;
         score++;
 		streak++;
 		if (streak > beststreak) {
 		  beststreak = streak
 		}
       } else {
-        document.getElementById('feedback').textContent = `Not quite! ${entries[entry1Index]} is rank ${entry1Index}, and ${entries[entry2Index]} is rank ${entry2Index}!`;
+        document.getElementById('feedback').textContent = `Not quite! ${entries[entry1Index]} is rank ${entry1display}, and ${entries[entry2Index]} is rank ${entry2display}!`;
 		score--;
 		streak = 0;
 		

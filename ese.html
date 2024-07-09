@@ -25,7 +25,7 @@
   <div id="score">Score: 0</div>
   <div id="streak">Streak: 0</div>
   <div id="beststreak">Best Streak: 0</div>
-  <div id="disclaimer">This is a fan project, just for fun. I do not own any aspect of the ESE list.</div> 
+  <div id="disclaimer">Last updated 8 July 2024. This is a fan project, just for fun. I do not own any aspect of the ESE list.</div> 
 
   <script>
     let score = 0;
@@ -35,20 +35,8 @@
 	let entry1display = 0;
 	let entry2display = 0;
 
-	
-    document.addEventListener('DOMContentLoaded', () => {
-      fetch('eselist.txt')
-	    .then(response => response.text())
-        .then(data => {
-          entries = data.split('\n').filter(entry => entry.trim() !== '');
-          loadNewEntries();
-        });
-
-      console.log("Setting up handlers...")
-      document.getElementById('entry1').addEventListener('click', () => handleGuess(1));
-      document.getElementById('entry2').addEventListener('click', () => handleGuess(2));
-    });
-	
+	setupList('eselist.txt');
+    	
     function loadNewEntries() {
       if (entries.length < 2) return;
 
@@ -71,6 +59,27 @@
 	
 	function getRandom(limit) {
 		return Math.floor(Math.random() * limit);
+	}
+	
+	function setupList(listFile) {
+		document.addEventListener('DOMContentLoaded', () => {
+		  fetch('eselist.txt')
+			.then(response => response.text())
+			.then(data => {
+			  entries = data.split('\n').filter(entry => entry.trim() !== '');
+			  loadNewEntries();
+			});
+
+		  console.log("Setting up handlers...")
+		  document.getElementById('entry1').addEventListener('click', () => handleGuess(1));
+		  document.getElementById('entry2').addEventListener('click', () => handleGuess(2));
+		});
+	}
+	
+	function resetScores() {
+		score = 0;
+		streak = 0;
+		beststreak = 0;
 	}
 
     function handleGuess(guessIndex) {

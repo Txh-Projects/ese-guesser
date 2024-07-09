@@ -31,7 +31,7 @@
         <option value="panelpreslist.txt">Panel President</option>
         <option value="snacklist.txt">Snack Situation</option>
     </select>
-  <div id="disclaimer">Last updated 8 July 2024. This is a fan project, just for fun. I do not own any aspect of the any of these lists.</div> 
+  <div id="disclaimer">Last updated 8 July 2024. This is a fan project, just for fun. I do not own any aspect of the any of these lists. v1.002.</div> 
 
   <script>
     let score = 0;
@@ -68,6 +68,7 @@
 	}
 	
 	function setupList(listFile) {
+		entries = [];
 		document.addEventListener('DOMContentLoaded', () => {
 		  fetch(listFile)
 			.then(response => response.text())

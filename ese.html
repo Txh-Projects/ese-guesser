@@ -31,7 +31,7 @@
         <option value="panelpreslist.txt">Panel President</option>
         <option value="snacklist.txt">Snack Situation</option>
     </select>
-  <div id="disclaimer">Last updated 8 July 2024. This is a fan project, just for fun. I do not own any aspect of the any of these lists. v1.002.</div> 
+  <div id="disclaimer">Last updated 8 July 2024. This is a fan project, just for fun. I do not own any aspect of the any of these lists. v1.003.</div> 
 
   <script>
     let score = 0;
@@ -68,20 +68,27 @@
 	}
 	
 	function setupList(listFile) {
-		entries = [];
+		console.log("Setting up list.");
 		document.addEventListener('DOMContentLoaded', () => {
-		  fetch(listFile)
-			.then(response => response.text())
-			.then(data => {
-			  entries = data.split('\n').filter(entry => entry.trim() !== '');
-			  loadNewEntries();
+		  fetchFromFile(listFile);
 			});
 
-		  console.log("Setting up handlers...")
+		  console.log("Setting up handlers...");
 		  document.getElementById('entry1').addEventListener('click', () => handleGuess(1));
 		  document.getElementById('entry2').addEventListener('click', () => handleGuess(2));
 		});
 	}
+	
+	function fetchFromFile(listFile) {
+		console.log("Fetching entries");
+		entries = [];
+		fetch(listFile)
+			.then(response => response.text())
+			.then(data => {
+			  entries = data.split('\n').filter(entry => entry.trim() !== '');
+			  loadNewEntries();
+	}
+	
 	
 	function resetScores() {
 		score = 0;
@@ -99,7 +106,7 @@
 	
 	function changeList(listFile) {
 		console.log("Changing list.");
-		setupList(listFile);
+		fetchFromFile(listFile);
 		resetScores();
 		loadNewEntries();
 	}

@@ -15,7 +15,7 @@
 </head>
 <body>
   <h1>Every Story Ever guessing game</h1>
-  <div>The hosts of <a href="https://zencastr.com/War-Rocket-Ajax">War Rocket Ajax</a> have, since 2014, been building a list of every comic story ever, ranked from best to worst.</div> 
+  <div>The hosts of <a href="https://zencastr.com/War-Rocket-Ajax">War Rocket Ajax</a> have, since 2014, been building a list of every comic story ever, ranked from best to worst. They are also responsible for several other lists.</div> 
   <h2>Which one ranks higher?</h2>
   <div id="entries">
     <div id="entry1" class="entry"></div>
@@ -86,10 +86,18 @@
 		score = 0;
 		streak = 0;
 		beststreak = 0;
+		updateScoreDisplay()
 	}
 	
+	function updateScoreDisplay() {
+	  document.getElementById('score').textContent = `Score: ${score}`;
+	  document.getElementById('streak').textContent = `Streak: ${streak}`;
+	  document.getElementById('beststreak').textContent = `Best Streak: ${beststreak}`;	
+	}
+	
+	
 	function changeList(listFile) {
-		console.log("Changing list.")
+		console.log("Changing list.");
 		setupList(listFile);
 		resetScores();
 	}
@@ -114,9 +122,8 @@
 		score--;
 		streak = 0;		
       }
-      document.getElementById('score').textContent = `Score: ${score}`;
-	  document.getElementById('streak').textContent = `Streak: ${streak}`;
-	  document.getElementById('beststreak').textContent = `Best Streak: ${beststreak}`;
+	  
+	  updateScoreDisplay();
       loadNewEntries();
     }
   </script>

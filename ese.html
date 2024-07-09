@@ -3,24 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guess the Order</title>
+  <title>Every Story Guesser</title>
   <style>
     body { font-family: Arial, sans-serif; }
     .entry { cursor: pointer; margin: 20px; padding: 10px; border: 1px solid #000; display: inline-block; }
     #score { font-size: 20px; margin: 20px; }
+	#streak { font-size: 20px; margin: 20px; }
+	#beststreak { font-size: 20px; margin: 20px; }
+	#disclaimer { font-size: 10px; margin: 20px; }
   </style>
 </head>
 <body>
-  <h1>Which one ranks higher?</h1>
+  <h1>Every Story Ever guessing game</h1>
+  <div>The hosts of <a href="https://zencastr.com/War-Rocket-Ajax">War Rocket Ajax</a> have, since 2014, been building a list of every comic story ever, ranked from best to worst.</div> 
+  <h2>Which one ranks higher?</h2>
   <div id="entries">
     <div id="entry1" class="entry"></div>
     <div id="entry2" class="entry"></div>
   </div>
+  <div id="feedback">Take your first guess!</div>
   <div id="score">Score: 0</div>
+  <div id="streak">Streak: 0</div>
+  <div id="beststreak">Best Streak: 0</div>
+  <div id="disclaimer">This is a fan project, just for fun. I do not own any aspect of the ESE list.</div> 
 
   <script>
     let score = 0;
+	let streak = 0;
+	let beststreak = 0;
     let entries = [];
+	let entry1display = 0;
+	let entry2display = 0;
 
 	
     document.addEventListener('DOMContentLoaded', () => {
@@ -35,7 +48,7 @@
       document.getElementById('entry1').addEventListener('click', () => handleGuess(1));
       document.getElementById('entry2').addEventListener('click', () => handleGuess(2));
     });
-
+	
     function loadNewEntries() {
       if (entries.length < 2) return;
 
@@ -57,21 +70,33 @@
     }
 	
 	function getRandom(limit) {
-		return Math.floor(Math.random() * limit + 1);
+		return Math.floor(Math.random() * limit);
 	}
 
     function handleGuess(guessIndex) {
       console.log("Handling guess...");
 	  const entry1Index = parseInt(document.getElementById('entry1').dataset.index);
       const entry2Index = parseInt(document.getElementById('entry2').dataset.index);
-
+      
+	  entry1display = entry1Index + 1;
+	  entry2display = entry2Index + 1;
+	  
       if ((guessIndex === 1 && entry1Index < entry2Index) || (guessIndex === 2 && entry2Index < entry1Index)) {
+	    document.getElementById('feedback').textContent = `You got it! ${entries[entry1Index]} is rank ${entry1display}, and ${entries[entry2Index]} is rank ${entry2display}!`;
         score++;
+		streak++;
+		if (streak > beststreak) {
+		  beststreak = streak
+		}
       } else {
-        score = 0;
+        document.getElementById('feedback').textContent = `Not quite! ${entries[entry1Index]} is rank ${entry1display}, and ${entries[entry2Index]} is rank ${entry2display}!`;
+		score--;
+		streak = 0;
+		
       }
-
       document.getElementById('score').textContent = `Score: ${score}`;
+	  document.getElementById('streak').textContent = `Streak: ${streak}`;
+	  document.getElementById('beststreak').textContent = `Best Streak: ${beststreak}`;
       loadNewEntries();
     }
   </script>
